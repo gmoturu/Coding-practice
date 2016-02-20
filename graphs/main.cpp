@@ -10,7 +10,7 @@ int main(){
     for(int i=0;i<edges;i++){
         cin>>s_vertex>>e_vertex;
         gr.addEdge(s_vertex,e_vertex);
-//        gr.addEdge(e_vertex,s_vertex);
+        gr.addEdge(e_vertex,s_vertex);
     }
     gr.printGraph();
 
