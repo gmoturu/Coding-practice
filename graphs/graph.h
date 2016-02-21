@@ -3,10 +3,47 @@
 #include"stack.h"
 template <class G> class Graph{
     public:
-        void depthFS_Loop(SearchGraph *xfs,G s_vertex){
+        void stronglyConnected(Graph<G> *rg,G s_vertex,List<G> *scc){
+            List<G> top;
             bool visited[V];
+            for(int i=0;i<V;i++)
+                visited[i]=0;
+            int i=0;
+            topologicalSort(s_vertex,&top);
+            for(Node<G> *ptr=top.head;ptr!=NULL;ptr=ptr->next){
+                if(!visited[ptr->data-O]){
+                    SearchGraph xfs[V];
+                    rg->depthFS_Loop(xfs,ptr->data,visited);
+                    for(int j=0;j<V;j++)
+                        if(xfs[j].vertex!=0)
+                            (scc+i)->addToTail(xfs[j].vertex);
+                    i++;
+                }
+            }
+        }
+        void topologicalSort(G s_vertex,List<G> *top){
+            bool visited[V];
+            for(int i=0;i<V;i++)
+                visited[i]=0;
+            topoSort(s_vertex,top,visited);
+            for(int i=0;i<V;i++)
+                if(!visited[i] && !lst[i].isListEmpty())
+                    topoSort(i+O,top,visited);
+        }
+        void topoSort(G s_vertex,List<G> *top,bool *visited){
+            visited[s_vertex-O]=1;
+            for(Node<G> *ptr=lst[s_vertex-O].head;ptr!=NULL;ptr=ptr->next){
+                if(!visited[ptr->data-O]){
+                    visited[ptr->data-O]=1;
+                    topoSort(ptr->data,top,visited);
+                }
+            }
+            (*top).addToHead(s_vertex);
+        }
+        void depthFS_Loop(SearchGraph *xfs,G s_vertex,bool *visited){
+//            bool visited[V];
             for(int i=0;i<V;i++){
-                visited[i]=xfs[i].vertex=xfs[i].distance=0;
+                xfs[i].vertex=xfs[i].distance=0;
                 xfs[i].parent='-';
             }
             xfs[0].vertex=s_vertex;
