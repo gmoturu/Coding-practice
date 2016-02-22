@@ -14,10 +14,13 @@ template <class N> class Node{
         int weight;
         Node *next;
 };
-
 class SearchGraph{
         public:
             char vertex;
             char parent;
             int distance;
+};
+template <typename H> struct HeapNode{
+    H vertex;
+    int distance;
 };

@@ -1,6 +1,10 @@
 #include"list.h"
 #include"queue.h"
 #include"stack.h"
+//#include"binary_heap.h"
+#define PARENT(i) (i-1)/2
+#define LEFT(i) 2*i+1
+#define RIGHT(i) 2*i+2
 template <class G> class Graph{
     public:
         void stronglyConnected(Graph<G> *rg,G s_vertex,List<G> *scc){

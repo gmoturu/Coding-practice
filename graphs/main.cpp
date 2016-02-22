@@ -1,4 +1,5 @@
 #include"graph.h"
+#define SZ 10
 void printSearch(SearchGraph *);
 int main(){
     Graph<char> gr,rg,gp;
@@ -9,12 +10,17 @@ int main(){
 
     cin>>edges;
     for(int i=0;i<edges;i++){
-        cin>>s_vertex>>e_vertex;
-        gr.addEdge(s_vertex,e_vertex);
-//        gr.addEdge(e_vertex,s_vertex);
+        cin>>s_vertex>>e_vertex>>weight;
+        gr.addEdge(s_vertex,e_vertex,weight);
+        gr.addEdge(e_vertex,s_vertex,weight);
     }
+    gr.printGraph();
+/*    cin>>s_vertex;
+    gr.prims_mst(xfs,s_vertex);
+    printSearch(xfs);
+
     gr.reverseGraph(&rg);
-/*
+
     gr.printGraph();
     rg.printGraph();
 
@@ -34,7 +40,6 @@ int main(){
     cin>>s_vertex;
     gr.breadthFS(xfs,s_vertex);
     printSearch(xfs);
-*/
 
     List<char> scc[V];
     cin>>s_vertex;
@@ -43,8 +48,9 @@ int main(){
         if(!scc[i].isListEmpty())
             scc[i].printDataOnly();
 
-//    gr.removeLoopsMultipleEdges(&gp);
-//    gp.printGraph();
+    gr.removeLoopsMultipleEdges(&gp);
+    gp.printGraph();
+    */
 
     return 0;
 }
