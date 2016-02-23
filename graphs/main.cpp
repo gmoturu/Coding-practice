@@ -15,6 +15,9 @@ int main(){
         gr.addEdge(e_vertex,s_vertex,weight);
     }
     gr.printGraph();
+    cin>>s_vertex;
+    gr.prims_mst(xfs,s_vertex);
+    printSearch(xfs);
 /*    cin>>s_vertex;
     gr.prims_mst(xfs,s_vertex);
     printSearch(xfs);
