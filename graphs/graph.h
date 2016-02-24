@@ -5,20 +5,21 @@ template <class G> class Graph{
     public:
         void prims_mst(SearchGraph *xfs,G s_vertex){
             bool visited[V]={0};
+            int heap_map[V];
             BinaryHeap heap_array[V];
             for(int i=0;i<V;i++){
-                xfs[i].vertex=heap_array[i].vertex=0;
+                xfs[i].vertex=0;
+                heap_array[i].vertex=i+O;
                 xfs[i].distance=heap_array[i].distance=INT_MAX;
                 xfs[i].parent=heap_array[i].parent='-';
+                heap_map[i]=i;
             }
             heap_array[s_vertex-O].vertex=s_vertex;
             heap_array[s_vertex-O].distance=0;
             int heap_size=V,i=0;
-//            BuildMinHeap(heap_array,heap_size);
-//            std::cout<<heap_array[0].vertex<<" "<<heap_array[0].distance<<std::endl;
-
-            /*
             for(BuildMinHeap(heap_array,heap_size);heap_array[0].distance!=INT_MAX;HeapExtractMin(heap_array,&heap_size)){
+                for(int j=0;j<heap_size;j++)
+                    heap_map[heap_array[j].vertex-O]=j;
                 if(!visited[(heap_array[0].vertex)-O]){
                     xfs[i].vertex=heap_array[0].vertex;
                     xfs[i].parent=heap_array[0].parent;
@@ -26,15 +27,15 @@ template <class G> class Graph{
                     visited[(heap_array[0].vertex)-O]=1;
                     i++;
                     for(Node<G> *ptr=lst[(heap_array[0].vertex)-O].head;ptr!=NULL;ptr=ptr->next){
-                        if(!visited[ptr->data-O] && heap_array[0].distance+ptr->weight<heap_array[ptr->data-O].distance){
-                            heap_array[V-1].vertex=ptr->data;
-                            heap_array[V-1].parent=heap_array[0].vertex;
-                            heap_array[V-1].distance=heap_array[0].distance+ptr->weight;
+                        if(!visited[ptr->data-O] && heap_array[0].distance+ptr->weight<heap_array[heap_map[ptr->data-O]].distance){
+                            heap_array[heap_map[ptr->data-O]].vertex=ptr->data;
+                            heap_array[heap_map[ptr->data-O]].parent=heap_array[0].vertex;
+                            heap_array[heap_map[ptr->data-O]].distance=heap_array[0].distance+ptr->weight;
+                            HeapDecreaseKey(heap_array,heap_map[ptr->data-O]);
                         }
                     }
                 }
             }
-            */
         }
         void stronglyConnected(Graph<G> *rg,G s_vertex,List<G> *scc){
             List<G> top;

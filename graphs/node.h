@@ -52,3 +52,11 @@ void HeapExtractMin(BinaryHeap *arr,int *heap_size){
     (*heap_size)--;
     MinHeapify(arr,*heap_size,0);
 }
+void HeapDecreaseKey(BinaryHeap *arr,int i){
+    while(i>=0 && arr[i].distance < arr[PARENT(i)].distance){
+        BinaryHeap tmp=arr[i];
+        arr[i]=arr[PARENT(i)];
+        arr[PARENT(i)]=tmp;
+        i=PARENT(i);
+    }
+}
