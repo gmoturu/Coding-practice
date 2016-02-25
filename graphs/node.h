@@ -3,6 +3,7 @@
 #define PARENT(i) (i-1)/2
 #define LEFT(i) 2*i+1
 #define RIGHT(i) 2*i+2
+#define SWAP(a,b) {a=a^b;b=a^b;a=a^b;}
 template <class N> class Node{
     public:
         Node(){
@@ -29,7 +30,7 @@ struct BinaryHeap{
     int distance;
 };
 
-void MinHeapify(BinaryHeap *arr,int heap_size,int i){
+void MinHeapify(BinaryHeap *arr,int heap_size,int i,int *heap_map){
     int l=LEFT(i);
     int r=RIGHT(i);
     int small=i;
@@ -40,23 +41,28 @@ void MinHeapify(BinaryHeap *arr,int heap_size,int i){
         tmp=arr[i];
         arr[i]=arr[small];
         arr[small]=tmp;
-        MinHeapify(arr,heap_size,small);
+        SWAP(heap_map[arr[i].vertex-O],heap_map[arr[small].vertex-O]);
+        MinHeapify(arr,heap_size,small,heap_map);
     }
 }
-void BuildMinHeap(BinaryHeap *arr,int heap_size){
+void BuildMinHeap(BinaryHeap *arr,int heap_size,int *heap_map){
     for(int i=heap_size/2;i>=0;i--)
-        MinHeapify(arr,heap_size,i);
+        MinHeapify(arr,heap_size,i,heap_map);
 }
-void HeapExtractMin(BinaryHeap *arr,int *heap_size){
+void HeapExtractMin(BinaryHeap *arr,int *heap_size,int *heap_map){
     arr[0]=arr[*heap_size-1];
+    heap_map[arr[*heap_size-1].vertex]=0;
     (*heap_size)--;
-    MinHeapify(arr,*heap_size,0);
+    MinHeapify(arr,*heap_size,0,heap_map);
 }
-void HeapDecreaseKey(BinaryHeap *arr,int i){
-    while(i>=0 && arr[i].distance < arr[PARENT(i)].distance){
+void HeapDecreaseKey(BinaryHeap *arr,int index,int *heap_map){
+    /*
+    for(int j=PARENT(i);i>0 && arr[j].distance>arr[i].distance;i=j,j=PARENT(j)){
+        std::cout<<i<<" "<<j<<std::endl;
         BinaryHeap tmp=arr[i];
-        arr[i]=arr[PARENT(i)];
-        arr[PARENT(i)]=tmp;
-        i=PARENT(i);
+        arr[i]=arr[j];
+        arr[j]=tmp;
+        SWAP(heap_map[arr[i].vertex-O],heap_map[arr[j].vertex-O]);
     }
+    */
 }
