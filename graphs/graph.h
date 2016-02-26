@@ -1,8 +1,81 @@
 #include"list.h"
 #include"queue.h"
 #include"stack.h"
+#include"disjoint_set.h"
 template <class G> class Graph{
     public:
+        void bellmanFord(SearchGraph *xfs,G s_vertex){
+            for(int i=0;i<V;i++){
+                xfs[i].vertex=0;
+                xfs[i].parent='-';
+                xfs[i].distance=INT_MAX;
+            }
+            xfs[s_vertex-O].vertex=s_vertex;
+            xfs[s_vertex-O].distance=0;
+            for(int change=0;;){
+                for(Node<G> *ptr=lst[s_vertex-O].head;ptr!=NULL;ptr=ptr->next){
+                    if(xfs[s_vertex-O].distance+ptr->weight<xfs[ptr->data-O].distance){
+                        xfs[ptr->data-O].distance=xfs[s_vertex-O].distance+ptr->weight;
+                        xfs[ptr->data-O].parent=s_vertex;
+                        xfs[ptr->data-O].vertex=ptr->data;
+                        change=1;
+                    }
+                }
+
+                for(int i=0;i<V;i++){
+                    if(i!=s_vertex-O){
+                        for(Node<G> *ptr=lst[i].head;ptr!=NULL;ptr=ptr->next){
+                            if(xfs[i].distance!=INT_MAX && xfs[i].distance+ptr->weight<xfs[ptr->data-O].distance){
+                                xfs[ptr->data-O].distance=xfs[i].distance+ptr->weight;
+                                xfs[ptr->data-O].parent=i+O;
+                                xfs[ptr->data-O].vertex=ptr->data;
+                                change=1;
+                            }
+                        }
+                    }
+                }
+                if(!change)
+                    break;
+                change=0;
+            }
+
+
+
+        }
+        void kruskals_mst(SearchGraph *xfs,G s_vertex,int edges){
+            for(int i=0;i<V;i++){
+                xfs[i].vertex=0;
+                xfs[i].distance=0;
+                xfs[i].parent='-';
+            }
+            BinaryHeap *sort_edges=new BinaryHeap[edges];
+
+            for(int i=0,j=0;i<V;i++){
+                for(Node<G> *ptr=lst[i].head;ptr!=NULL;ptr=ptr->next){
+                    if(ptr->data>i+O){
+                        sort_edges[j].vertex=ptr->data;
+                        sort_edges[j].parent=(char)(i+O);
+                        sort_edges[j].distance=ptr->weight;
+                        j++;
+                    }
+                }
+            }
+            SortEdges(sort_edges,edges);
+
+            Disjoint<G> dsj;
+            for(int i=0,j=0;i<edges;i++){
+                if(dsj.findSet(sort_edges[i].vertex)!=dsj.findSet(sort_edges[i].parent)){
+//                    std::cout<<dsj.findSet(sort_edges[i].vertex)<<" "<<dsj.findSet(sort_edges[i].parent)<<std::endl;
+                    dsj.unionSet(sort_edges[i].parent,sort_edges[i].vertex);
+                    xfs[j].vertex=sort_edges[i].parent;
+                    xfs[j].parent=sort_edges[i].vertex;
+                    xfs[j].distance=sort_edges[i].distance;
+                    j++;
+                }
+            }
+
+            delete [] sort_edges;
+        }
         void prims_mst(SearchGraph *xfs,G s_vertex){
             bool visited[V]={0};
             int heap_map[V];

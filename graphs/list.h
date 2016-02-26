@@ -12,6 +12,9 @@ template <class L> class List{
                 head=ptr;
             }
         }
+        void deleteList(){
+            ~List();
+        }
         bool isListEmpty(){
             return head==NULL;
         }
@@ -31,9 +34,17 @@ template <class L> class List{
             tail=tail->next;
         }
         void printDataOnly(){
-            for(Node<L> *ptr=head;ptr!=NULL;ptr=ptr->next)
-                std::cout<<ptr->data<<" ";
-            std::cout<<"\n";
+            if(!isListEmpty()){
+                for(Node<L> *ptr=head;ptr!=NULL;ptr=ptr->next)
+                    std::cout<<ptr->data<<" ";
+                NWLN;
+            }
+        }
+        void mergeList(Node<L> *hptr,Node<L> *tptr){
+            if(hptr!=NULL){
+                tail->next=hptr;
+                tail=tptr;
+            }
         }
         void printList(){
             for(Node<L> *ptr=head;ptr!=NULL;ptr=ptr->next)

@@ -66,3 +66,31 @@ void HeapDecreaseKey(BinaryHeap *arr,int index,int *heap_map){
     }
     */
 }
+
+void MaxHeapify(BinaryHeap *arr,int heap_size,int i){
+    int l=LEFT(i);
+    int r=RIGHT(i);
+    int large=i;
+    (l<heap_size && arr[l].distance>arr[i].distance)?large=l:large;
+    (r<heap_size && arr[r].distance>arr[large].distance)?large=r:large;
+    if(large!=i){
+        BinaryHeap tmp=arr[i];
+        arr[i]=arr[large];
+        arr[large]=tmp;
+        MaxHeapify(arr,heap_size,large);
+    }
+}
+void BuildMaxHeap(BinaryHeap *arr,int heap_size){
+    for(int i=heap_size/2;i>=0;i--)
+        MaxHeapify(arr,heap_size,i);
+}
+void SortEdges(BinaryHeap *arr,int heap_size){
+    BuildMaxHeap(arr,heap_size);
+    while(heap_size>0){
+        BinaryHeap tmp=arr[0];
+        arr[0]=arr[heap_size-1];
+        arr[heap_size-1]=tmp;
+        heap_size--;
+        MaxHeapify(arr,heap_size,0);
+    }
+}

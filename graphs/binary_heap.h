@@ -72,3 +72,11 @@ void MaxHeapInsert(int *arr,int *heap_size,int key){
     (*heap_size)++;
     HeapIncreaseKey(arr,*heap_size-1,key);
 }
+void MinHeapSort(int *arr,int heap_size){
+    BuildMaxHeap(arr,heap_size);
+    while(heap_size>0){
+        SWAP(arr[0],arr[heap_size-1]);
+        heap_size--;
+        MaxHeapify(arr,heap_size,0);
+    }
+}

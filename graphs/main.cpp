@@ -12,13 +12,20 @@ int main(){
     for(int i=0;i<edges;i++){
         cin>>s_vertex>>e_vertex>>weight;
         gr.addEdge(s_vertex,e_vertex,weight);
-        gr.addEdge(e_vertex,s_vertex,weight);
+//        gr.addEdge(e_vertex,s_vertex,weight);
     }
     gr.printGraph();
+
     cin>>s_vertex;
+    gr.bellmanFord(xfs,s_vertex);
+    printSearch(xfs);
+
+    /*
+    gr.kruskals_mst(xfs,s_vertex,edges);
+    printSearch(xfs);
     gr.prims_mst(xfs,s_vertex);
     printSearch(xfs);
-/*    cin>>s_vertex;
+    cin>>s_vertex;
     gr.prims_mst(xfs,s_vertex);
     printSearch(xfs);
 
