@@ -17,7 +17,7 @@ int main(){
     gr.printGraph();
 
     cin>>s_vertex;
-    gr.bellmanFord(xfs,s_vertex);
+    gr.djikstra(xfs,s_vertex);
     printSearch(xfs);
 
     /*

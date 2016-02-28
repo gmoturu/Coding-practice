@@ -4,6 +4,36 @@
 #include"disjoint_set.h"
 template <class G> class Graph{
     public:
+        void djikstra(SearchGraph *xfs,G s_vertex){
+            bool visited[V]={0};
+            int heap_map[V];
+            BinaryHeap heap_array[V];
+            for(int i=0;i<V;i++){
+                xfs[i].vertex=0;
+                heap_array[i].vertex=i+O;
+                xfs[i].distance=heap_array[i].distance=INT_MAX;
+                xfs[i].parent=heap_array[i].parent='-';
+                heap_map[i]=i;
+            }
+            heap_array[s_vertex-O].vertex=s_vertex;
+            heap_array[s_vertex-O].distance=0;
+            int heap_size=V,i=0;
+            for(BuildMinHeap(heap_array,heap_size,heap_map);heap_array[0].distance!=INT_MAX;HeapExtractMin(heap_array,&heap_size,heap_map),BuildMinHeap(heap_array,heap_size,heap_map)){
+                i=heap_array[0].vertex-O;
+                xfs[i].vertex=heap_array[0].vertex;
+                xfs[i].parent=heap_array[0].parent;
+                xfs[i].distance=heap_array[0].distance;
+                visited[i]=1;
+
+                for(Node<G> *ptr=lst[i].head;ptr!=NULL;ptr=ptr->next){
+                    if(!visited[ptr->data-O] && heap_array[heap_map[ptr->data-O]].distance>ptr->weight+heap_array[0].distance){
+                        heap_array[heap_map[ptr->data-O]].vertex=ptr->data;
+                        heap_array[heap_map[ptr->data-O]].parent=heap_array[0].vertex;
+                        heap_array[heap_map[ptr->data-O]].distance=ptr->weight+heap_array[0].distance;
+                    }
+                }
+            }
+        }
         void bellmanFord(SearchGraph *xfs,G s_vertex){
             for(int i=0;i<V;i++){
                 xfs[i].vertex=0;
@@ -38,9 +68,6 @@ template <class G> class Graph{
                     break;
                 change=0;
             }
-
-
-
         }
         void kruskals_mst(SearchGraph *xfs,G s_vertex,int edges){
             for(int i=0;i<V;i++){
