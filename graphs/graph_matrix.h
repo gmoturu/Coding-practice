@@ -15,7 +15,7 @@ class Graph_Matrix{
                 NWLN;
             }
         }
-        void addEdges(char s_vertex,char e_vertex,int weight=1){
+        void addEdge(char s_vertex,char e_vertex,int weight=1){
             matrix[s_vertex-O][e_vertex-O]=weight;
         }
         int matrix[V][V];
