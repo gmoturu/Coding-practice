@@ -1,2 +1,2 @@
 # coding-practice
-Data structures & algorithms practice
+Data structures & Algorithms practice
