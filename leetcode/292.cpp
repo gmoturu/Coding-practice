@@ -1,6 +1,5 @@
 /*
-		Nim Game
-		https://leetcode.com/problems/nim-game/
+	https://leetcode.com/problems/nim-game/
 */
 class Solution{
 public:
